@@ -1,0 +1,90 @@
+class UniversalAr < ActiveRecord::Migration[5.0]
+  def change
+    create_table :users do |t|
+      t.references :scope, polymorphic: true
+      ## Database authenticatable
+      t.string :email,              null: false, default: ""
+      t.string :encrypted_password, null: false, default: ""
+
+      ## Recoverable
+      t.string   :reset_password_token
+      t.datetime :reset_password_sent_at
+
+      ## Rememberable
+      t.datetime :remember_created_at
+
+      ## Trackable
+      t.integer  :sign_in_count, default: 0, null: false
+      t.datetime :current_sign_in_at
+      t.datetime :last_sign_in_at
+      t.string   :current_sign_in_ip
+      t.string   :last_sign_in_ip
+
+      ## Confirmable
+      t.string   :confirmation_token
+      t.datetime :confirmed_at
+      t.datetime :confirmation_sent_at
+      t.string   :unconfirmed_email # Only if using reconfirmable
+
+      ## Lockable
+      t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
+      t.string   :unlock_token # Only if unlock strategy is :email or :both
+      t.datetime :locked_at
+
+
+      t.timestamps null: false
+    end
+
+    add_index :users, :email,                unique: true
+    add_index :users, :reset_password_token, unique: true
+    add_index :users, :confirmation_token,   unique: true
+    add_index :users, :unlock_token,         unique: true
+    
+    ######## ROLES
+    create_table(:roles) do |t|
+      t.string :name
+      t.references :scope, polymorphic: true
+
+      t.timestamps
+    end
+    create_table(:users_roles, id: false) do |t|
+      t.references :user
+      t.references :role
+    end
+    add_index(:roles, :name)
+    add_index(:roles, [ :name, :scope_type, :scope_id ])
+    add_index(:users_roles, [ :user_id, :role_id ])
+    
+    #### FUNCTIONS
+    create_table :functions do |t|
+      t.string :context
+      t.string :code
+    end
+    create_table(:subject_functions, id: false) do |t|
+      t.references :subject, polymorphic: true
+      t.references :function
+    end
+    add_index(:functions, :context)
+    add_index(:functions, :code)
+    add_index(:subject_functions, [ :subject_id, :subject_type, :function_id ], name: :index_subject_functions)
+    
+    ### KEY VALUES
+    create_table :key_values do |t|
+      t.references  :subject, polymorphic: true
+      t.string      :key
+      t.string      :value
+      t.timestamps
+    end
+    
+    ### KEY VALUE HISTORY
+    create_table :key_value_histories do |t|
+      t.references  :subject, polymorphic: true
+      t.string      :key
+      t.string      :was_value
+      t.string      :now_value
+      t.timestamps
+    end
+  end
+  
+  
+end
