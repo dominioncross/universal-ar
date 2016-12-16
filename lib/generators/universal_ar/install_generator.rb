@@ -12,7 +12,7 @@ class UniversalAr::InstallGenerator < Rails::Generators::Base #:nodoc:
     @prev_migration_nr.to_s
   end
 
-  argument :name, :type => :string, :default => 'universal_ar_migration'
+  argument :name, type: :string, default: 'universal_ar_migration'
   def generate_files
     migration_template 'universal_ar_migration.rb', "db/migrate/#{name}.rb"
   end
