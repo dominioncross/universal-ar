@@ -8,6 +8,10 @@ module UniversalAr
         has_many :functions, through: :subject_functions, class_name: 'UniversalAr::Function'
       end
       
+      def function_names
+        self.functions.map{|f| f.name}
+      end
+      
       def can?(context, code=nil)
         if code.blank?
           return self.functions.map{|f| f.context}.include?(context.to_s)

@@ -23,15 +23,15 @@ module UniversalAr::Concerns::Array
           self.key_values.where(key: key, value: v).destroy_all
         end
         define_singleton_method "find_all_by_#{key.to_s}" do |v|
-          self.klass.classify.constantize.joins("INNER JOIN `key_values` AS `#{key}_key_values`
-            ON `#{key}_key_values`.`subject_type`='#{self.klass.classify.to_s}'
+          "UniversalAr::#{self.klass.classify}".constantize.joins("INNER JOIN `key_values` AS `#{key}_key_values`
+            ON `#{key}_key_values`.`subject_type`='UniversalAr::#{self.klass.classify.to_s}'
             AND `#{key}_key_values`.`subject_id`=`#{self.klass.to_s.classify.pluralize.downcase}`.`id`
             AND `#{key}_key_values`.`key`='#{key}'")
             .where("`#{key}_key_values`.`value`=?", v)
         end
         define_singleton_method "find_by_#{key.to_s}" do |v|
-          self.klass.classify.constantize.joins("INNER JOIN `key_values` AS `#{key}_key_values`
-            ON `#{key}_key_values`.`subject_type`='#{self.klass.classify.to_s}'
+          "UniversalAr::#{self.klass.classify}".constantize.joins("INNER JOIN `key_values` AS `#{key}_key_values`
+            ON `#{key}_key_values`.`subject_type`='UniversalAr::#{self.klass.classify.to_s}'
             AND `#{key}_key_values`.`subject_id`=`#{self.klass.to_s.classify.pluralize.downcase}`.`id`
             AND `#{key}_key_values`.`key`='#{key}'")
             .where("`#{key}_key_values`.`value`=?", v).first

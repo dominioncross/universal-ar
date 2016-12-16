@@ -1,0 +1,20 @@
+- if @roles.any?
+  = table(header: %w(role functions users edit), class: 'table-condensed') do
+    - @roles.each do |role|
+      %tr
+        %td
+          = role.name
+          .text-muted.small= role.notes
+        %td
+          .small
+            = role.function_names.join(', ')
+        %td
+          = link_to icon('user'), universal_ar.users_role_path(role), :remote => true
+          .small.text-info= role.users.map{|u| (u.name.blank? ? u.email : u.name)}.join(', ')
+        %td
+          - if role.locked?
+            .pull-left= icon('lock')
+          - else
+            = link_to icon('pencil'), universal_ar.edit_role_path(role)
+- else
+  .alert.alert-warning There are no roles to list

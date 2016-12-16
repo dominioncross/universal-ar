@@ -1,0 +1,21 @@
+%h2 First things first, let's create your scope and initial Admin user:
+
+.row
+  .col-sm-6
+    = form_tag universal_ar.setup_path do
+      .form-group
+        = label :scope, :name
+        = text_field :scope, :name, class: 'form-control', value: 'Default'
+      .form-group
+        = label :domain, :all, 'Domains'
+        = text_area :domain, :all, class: 'form-control', value: request.host
+        .small Each domain on a separate line
+      .form-group
+        = label :user, :email, 'Admin email'
+        = email_field :user, :email, class: 'form-control', required: true
+      .form-group
+        = label :user, :password, 'Admin password'
+        = password_field :user, :password, class: 'form-control', required: true
+      .form-group
+        = button_tag "#{icon('check')} Save".html_safe, class: 'btn btn-primary'
+        

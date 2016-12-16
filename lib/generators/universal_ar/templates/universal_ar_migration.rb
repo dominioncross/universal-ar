@@ -1,10 +1,17 @@
-class UniversalAr < ActiveRecord::Migration[5.0]
+class UniversalArMigration < ActiveRecord::Migration[5.0]
   def change
+    create_table(:scopes) do |t|
+      t.string :name
+      t.timestamps
+    end
     create_table :users do |t|
       t.references :scope, polymorphic: true
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      t.string :given_names
+      t.string :family_name
+      t.string :preferred_name
 
       ## Recoverable
       t.string   :reset_password_token
@@ -43,6 +50,7 @@ class UniversalAr < ActiveRecord::Migration[5.0]
     ######## ROLES
     create_table(:roles) do |t|
       t.string :name
+      t.string :notes
       t.references :scope, polymorphic: true
 
       t.timestamps
@@ -57,6 +65,7 @@ class UniversalAr < ActiveRecord::Migration[5.0]
     
     #### FUNCTIONS
     create_table :functions do |t|
+      t.references :scope, polymorphic: true
       t.string :context
       t.string :code
     end

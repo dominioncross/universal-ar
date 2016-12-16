@@ -20,7 +20,7 @@ module UniversalAr
       end
       
       module ClassMethods
-        def flags(klass, flag_array=[])
+        def flags(flag_array=[])
           join = "INNER Join key_values as flag_key_values on `flag_key_values`.`subject_id`=`#{klass}`.`id` and `flag_key_values`.`subject_type`='#{klass.to_s.classify}' and `flag_key_values`.`key` = 'flag'"
           scope :flagged, ->(value){joins(join).where("flag_key_values.value IN (#{(value.class!=Array ? [value.to_s] : value).map{|v| "'#{v.to_s.parameterize}'"}.join(',')})").group("#{klass}.id")}
           const_set("Flags", flag_array.map{|a| a.to_s})
