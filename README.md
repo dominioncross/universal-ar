@@ -22,12 +22,21 @@ $ gem install universal_ar
 ```
 ```bash
 $ rails g universal_ar:install
-$ rails g devise User
-$ rails generate devise:controllers users
-$ rails generate devise:views users
+$ rails g devise:controllers users
+$ rails g devise:views users
 $ rails db:migrate
+$ rails g controller home index
 ```
 
+Inherit Application controller from UniversalAr::ApplicationController
+```bash
+$ class ApplicationController < UniversalAr::ApplicationController
+```
+
+Add mount the engine in routes.rb
+```bash
+mount UniversalAr::Engine => '/universal'
+```
 ## Contributing
 Contribution directions go here.
 
