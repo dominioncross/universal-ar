@@ -4,7 +4,7 @@ module UniversalAr
   class RolesController < ApplicationController
 
     before_action :authenticate_user!, :require_sysadmin!
-    before_filter :find_role, only: [:users, :add_user, :remove_user, :edit, :update, :invite_user, :show, :destroy]
+    before_action :find_role, only: [:users, :add_user, :remove_user, :edit, :update, :invite_user, :show, :destroy]
 
     def index
       @roles = find_roles
@@ -32,14 +32,14 @@ module UniversalAr
 
     def add_user
       @user = User.find(params[:user_id])
-      @user.roles << @role if !@user.nil?
+      @user.roles << @role if !@user.nil? and !@user.roles.include?(@role)
       @users = @role.users
       render layout: false
     end
 
     def remove_user
       @user = User.find(params[:user_id])
-      @user.set_role!(@role, false)
+      @user.roles.destroy(@role) if !@role.nil? and !@user.nil?
       render layout: false
     end
 
@@ -50,7 +50,6 @@ module UniversalAr
 
     def update
       functions = params[:functions]
-      puts params[:functions].length
       @role.functions.destroy_all
       params[:functions].each do |function|
         context = function
