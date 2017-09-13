@@ -1,4 +1,5 @@
 require "universal-ar/engine"
+require "universal-ar/configuration"
 require "universal-ar/extensions"
 Gem.find_files("universal-ar/models/*.rb").each { |path| require path }
 module UniversalAr

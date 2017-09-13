@@ -13,8 +13,10 @@ module UniversalAr::Models
       include UniversalAr::Concerns::Status
       include UniversalAr::Concerns::UserAccess
       include UniversalAr::Concerns::Scoped
+      include UniversalAr::Concerns::Flaggable
+      include UniversalAr::Concerns::Commentable
       
-      base :user
+      base 'User', 'users'
       statuses %w(active archived)
       kinds %w(admin guest)
       

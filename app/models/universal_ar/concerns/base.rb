@@ -9,10 +9,12 @@ module UniversalAr::Concerns
     end
     
     module ClassMethods
-      attr_accessor :klass
+      attr_accessor :class_name
+      attr_accessor :table_name
       
-      def base(klass)
-        @klass ||= klass.to_s
+      def base(class_name, table_name)
+        @class_name ||= class_name.to_s
+        @table_name ||= table_name.to_s
       end
       
     end

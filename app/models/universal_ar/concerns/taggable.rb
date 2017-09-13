@@ -20,9 +20,13 @@ module UniversalAr::Concerns
       end
     end
     
+    #TODO
     module ClassMethods
-      def tags(klass)
-        scope :tagged, ->(value){joins("INNER Join key_values as tag_key_values on `tag_key_values`.`subject_id`=`#{klass}`.`id` and `tag_key_values`.`subject_type`='#{klass.to_s.classify}' and `tag_key_values`.`key` = 'tag'").where("tag_key_values.value IN (#{(value.class!=Array ? [value.to_s] : value).map{|v| "'#{v.to_s.parameterize}'"}.join(',')})").select("DISTINCT #{klass}.*")}
+      def tags(klass=nil)
+        scope :tagged, ->(value){joins("INNER Join `key_values` as `tag_key_values` on `tag_key_values`.`subject_id`=`#{self.table_name}`.`id` and 
+          `tag_key_values`.`subject_type`='#{self.class_name}' and `tag_key_values`.`key` = 'tag'")
+            .where("`tag_key_values`.`value` IN (#{(value.class!=Array ? [value.to_s] : value).map{|v| "'#{v.to_s.parameterize}'"}.join(',')})")
+            .select("DISTINCT `#{self.table_name}`.*")}
       end
     end
   end

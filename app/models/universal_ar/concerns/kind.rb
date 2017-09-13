@@ -8,6 +8,11 @@ module UniversalAr::Concerns
         key_value.update(value: val.to_s)
       end
       
+      def kind
+        key_value = self.key_values.find_by(key: :kind)
+        key_value.value.to_s if !key_value.nil?
+      end
+      
       private
         def set_default_kind
           self.key_values.new key: :kind, value: self.default_kind.to_s
@@ -16,9 +21,10 @@ module UniversalAr::Concerns
     
     module ClassMethods
       
-      def kinds(kind_array, default_kind=nil)
+      def kinds(kind_array=[], default_kind=nil)
         attr_accessor :default_kind
-        join = "INNER Join key_values as kind_key_values on `kind_key_values`.`subject_id`=`#{self.klass}`.`id` and `kind_key_values`.`subject_type`='#{self.klass.to_s.classify}' and `kind_key_values`.`key` = 'kind'"
+        join = "INNER Join key_values as kind_key_values on `kind_key_values`.`subject_id`=`#{self.table_name}`.`id` and
+          `kind_key_values`.`subject_type`='#{self.class_name}' and `kind_key_values`.`key` = 'kind'"
         scope :for_kind, ->(value){joins(join).where('kind_key_values.value=?', value.to_s)}
         const_set("Kinds", kind_array.map{|a| a.to_s})
         before_create :set_default_kind

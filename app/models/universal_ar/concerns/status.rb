@@ -15,7 +15,8 @@ module UniversalAr
         #possible options: :default (symbol), :multiple (true/false)
         def statuses(status_array=[], options={})
           attr_accessor :default_status
-          join = "INNER Join key_values as status_key_values on `status_key_values`.`subject_id`=`#{self.klass.to_s.classify.pluralize.downcase}`.`id` and `status_key_values`.`subject_type`='#{self.klass.to_s.classify}' and `status_key_values`.`key` = 'status'"
+          join = "INNER Join key_values as status_key_values on `status_key_values`.`subject_id`=`#{self.table_name}`.`id` and 
+            `status_key_values`.`subject_type`='#{self.class_name}' and `status_key_values`.`key` = 'status'"
           scope :for_status, ->(value){joins(join).where('status_key_values.value=?', value.to_s)}
           const_set("Statuses", status_array.map{|a| a.to_s})
           before_create :set_default_status

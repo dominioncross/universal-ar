@@ -49,10 +49,9 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     
     ######## ROLES
     create_table(:roles) do |t|
+      t.references :scope, polymorphic: true
       t.string :name
       t.string :notes
-      t.references :scope, polymorphic: true
-
       t.timestamps
     end
     create_table(:users_roles, id: false) do |t|
@@ -84,6 +83,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.string      :value
       t.timestamps
     end
+    add_index(:key_values, [:subject_type, :subject_id, :key], name: :index_scope)
     
     ### KEY VALUE HISTORY
     create_table :key_value_histories do |t|
@@ -93,6 +93,18 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.string      :now_value
       t.timestamps
     end
+    add_index(:key_value_histories, [:subject_type, :subject_id, :key], name: :index_scope)
+    
+    ### COMMENTS
+    create_table :comments do |t|
+      t.references  :scope, polymorphic: true
+      t.references  :subject, polymorphic: true
+      t.string      :title
+      t.string      :content, limit: 5000
+      t.references  :user
+      t.timestamps
+    end
+    
   end
   
   
