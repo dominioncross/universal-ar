@@ -105,6 +105,27 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.timestamps
     end
     
+    ### ATTACHMENTS
+    create_table :attachments do |t|
+      t.references  :scope, polymorphic: true
+      t.references  :subject, polymorphic: true
+      t.string      :name
+      t.string      :notes, limit: 1000
+      t.string      :file
+      t.references  :user
+      t.timestamps
+    end
+    
+    ### PICTURES
+    create_table :pictures do |t|
+      t.references  :scope, polymorphic: true
+      t.references  :subject, polymorphic: true
+      t.string      :name
+      t.string      :image
+      t.references  :user
+      t.timestamps
+    end
+    
   end
   
   
