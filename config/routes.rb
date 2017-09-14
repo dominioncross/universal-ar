@@ -7,6 +7,7 @@ UniversalAr::Engine.routes.draw do
   resources :comments
   resources :attachments
   resources :pictures
+  resources :configs
   
   resources :users do
     collection do

@@ -1,5 +1,5 @@
 module UniversalAr
-  class Configuration
+  class Config
 
     cattr_accessor :default_setting
 
@@ -9,4 +9,4 @@ module UniversalAr
 
   end
 end
-UniversalAr::Configuration.reset
+UniversalAr::Config.reset

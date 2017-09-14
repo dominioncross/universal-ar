@@ -126,6 +126,41 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.timestamps
     end
     
+    ### CONFGURATIONS
+    create_table :configurations do |t|
+      t.references  :subject, polymorphic: true
+      t.string      :class_name
+      t.string      :key
+      t.string      :title
+      t.string      :data_type
+      t.integer     :sequence
+      t.timestamps
+    end
+    create_table :config_dates do |t|
+      t.references  :configuration
+      t.string      :context
+      t.string      :key
+      t.date        :value
+    end
+    create_table :config_strings do |t|
+      t.references  :configuration
+      t.string      :context
+      t.string      :key
+      t.string      :value
+    end
+    create_table :config_integers do |t|
+      t.references  :configuration
+      t.string      :context
+      t.string      :key
+      t.integer      :value
+    end
+    create_table :config_booleans do |t|
+      t.references  :configuration
+      t.string      :context
+      t.string      :key
+      t.boolean     :value, default: false
+    end
+    
   end
   
   
