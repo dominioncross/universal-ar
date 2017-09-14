@@ -15,10 +15,13 @@ module UniversalAr::Models
       include UniversalAr::Concerns::Scoped
       include UniversalAr::Concerns::Flaggable
       include UniversalAr::Concerns::Commentable
+      include UniversalAr::Concerns::Taggable
       
       base 'User', 'users'
       statuses %w(active archived)
       kinds %w(admin guest)
+      flags
+      tags
       
       def name
         [self.given_names.titleize, self.family_name.titleize].compact.join(' ')

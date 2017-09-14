@@ -4,8 +4,8 @@ class UniversalAr::Scope < ApplicationRecord
   include UniversalAr::Concerns::Array
   include UniversalAr::Concerns::Functional
   include UniversalAr::Concerns::Commentable
+  include UniversalAr::Concerns::HasRoles
   
-  has_many :roles, class_name: 'UniversalAr::Role'
   has_many :users, class_name: 'UniversalAr::User'
   
   base 'UniversalAr::Scope', 'scopes'

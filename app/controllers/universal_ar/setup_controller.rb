@@ -20,7 +20,6 @@ module UniversalAr
         user.save_comment!("Administrator account created: #{user.to_json}", user, scope, :setup)
         #create the sysadmin role
         role = UniversalAr::Role.create name: :sysadmin, scope: scope
-        puts role.errors.to_json
         if !role.nil?
           role.flag!(:locked)
           user.roles << role

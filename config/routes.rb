@@ -3,6 +3,11 @@ UniversalAr::Engine.routes.draw do
   
   resource :setup, controller: :setup
   
+  resources :tags
+  resources :comments
+  resources :attachments
+  resources :pictures
+  
   resources :users do
     collection do
       get :autocomplete
