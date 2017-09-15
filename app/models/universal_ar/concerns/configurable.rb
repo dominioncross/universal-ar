@@ -10,5 +10,27 @@ module UniversalAr::Concerns::Configurable
     has_many :config_booleans, class_name: 'UniversalAr::ConfigBoolean', as: :subject
     has_many :config_dates, class_name: 'UniversalAr::ConfigDate', as: :subject
 
+    def update_configs!(config_params)
+      config_params.each do |config|
+        value = config[1].to_s
+        #find the config
+        configuration = UniversalAr::Configuration.find(config[0])
+        if !configuration.nil?
+          configuration.create_or_update_config(self, config[1])
+        end
+      end
+    end
+    
+    def config_value(configuration)
+      configuration.config_value(self)
+    end
+
+    #find the relevant config entry and make sure they have entered one
+    scope :with_config_value, ->(configuration){
+      joins("INNER JOIN `#{configuration.config_class.table_name}` ON `#{configuration.config_class.table_name}`.configuration_id = #{configuration.id} 
+        AND `#{configuration.config_class.table_name}`.`subject_id` = #{self.table_name}.`id` AND `#{configuration.config_class.table_name}`.`subject_type` = '#{self.class_name}'").
+      where("`#{configuration.config_class.table_name}`.`value` IS NOT NULL AND `#{configuration.config_class.table_name}`.`value` <> ''")
+    }
+  
   end
 end

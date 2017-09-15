@@ -130,6 +130,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     create_table :configurations do |t|
       t.references  :subject, polymorphic: true
       t.string      :class_name
+      t.string      :description
       t.string      :key
       t.string      :title
       t.string      :data_type
@@ -138,24 +139,28 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     end
     create_table :config_dates do |t|
       t.references  :configuration
+      t.references  :subject, polymorphic: true
       t.string      :context
       t.string      :key
       t.date        :value
     end
     create_table :config_strings do |t|
       t.references  :configuration
+      t.references  :subject, polymorphic: true
       t.string      :context
       t.string      :key
       t.string      :value
     end
     create_table :config_integers do |t|
       t.references  :configuration
+      t.references  :subject, polymorphic: true
       t.string      :context
       t.string      :key
       t.integer      :value
     end
     create_table :config_booleans do |t|
       t.references  :configuration
+      t.references  :subject, polymorphic: true
       t.string      :context
       t.string      :key
       t.boolean     :value, default: false

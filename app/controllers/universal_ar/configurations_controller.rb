@@ -8,7 +8,7 @@ module UniversalAr
     
     def create
       if !@subject.nil?
-        @configuration = @subject.configurations.create params.require(:configuration).permit(:class_name, :key, :title, :data_type)
+        @configuration = @subject.configurations.create params.require(:configuration).permit(:class_name, :key, :description, :title, :data_type)
       end
       puts @configuration.errors.to_json
       render json: {configuration: @configuration.to_json}

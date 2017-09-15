@@ -7,7 +7,7 @@ class UniversalAr::ConfigString < ApplicationRecord
   
   belongs_to :configuration
   
-  validates :subject, :key, :value, presence: true
+  validates :subject, :key, presence: true
   
 end
   
