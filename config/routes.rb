@@ -9,6 +9,7 @@ UniversalAr::Engine.routes.draw do
   resources :pictures
   resources :configs
   resources :statuses
+  resources :configurations
   
   resources :users do
     collection do
