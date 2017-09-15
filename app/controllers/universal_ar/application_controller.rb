@@ -9,7 +9,6 @@ module UniversalAr
     end
     
     def validate_scope
-      puts 'validate_scope'
       if universal_scope.nil? and controller_name != 'setup'
         redirect_to universal_ar.setup_path
       end

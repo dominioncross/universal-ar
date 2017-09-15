@@ -11,7 +11,7 @@ class UniversalAr::Configuration < ApplicationRecord
   has_many :config_integers, class_name: 'UniversalAr::ConfigInteger'
   
   extend FriendlyId
-  friendly_id :title, use: :slugged, slug_column: :key
+  friendly_id :title, use: :scoped, scope: :subject, slug_column: :key
   
   validates :key, uniqueness: {scope: :subject}
 
