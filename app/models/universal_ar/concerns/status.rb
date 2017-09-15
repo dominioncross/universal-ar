@@ -5,10 +5,20 @@ module UniversalAr
       
       included do
             
+        def status=(val)
+          key_value = self.key_values.find_or_create_by(key: :status)
+          key_value.update(value: val.to_s)
+        end
+        
+        def status
+          key_value = self.key_values.find_by(key: :status)
+          key_value.value.to_s if !key_value.nil?
+        end
+        
         private
-          def set_default_status
-            self.key_values.new key: :status, value: self.default_status.to_s
-          end
+        def set_default_status
+          self.key_values.new key: :status, value: self.default_status.to_s
+        end
       end
       
       module ClassMethods

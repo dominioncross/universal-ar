@@ -1,6 +1,10 @@
 module UniversalAr
   module ApplicationHelper
     
+    def submit(title='Save')
+      button_tag("#{icon('check')} #{title}".html_safe, class: 'btn btn-primary')
+    end
+    
     def icon(i)
       return "<i class='fa fa-fw fa-#{i}'></i>".html_safe
     end
