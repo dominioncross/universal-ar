@@ -8,6 +8,7 @@ UniversalAr::Engine.routes.draw do
   resources :attachments
   resources :pictures
   resources :configs
+  resources :statuses
   
   resources :users do
     collection do
