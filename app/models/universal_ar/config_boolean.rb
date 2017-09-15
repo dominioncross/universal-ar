@@ -5,7 +5,7 @@ class UniversalAr::ConfigBoolean < ApplicationRecord
   
   base UniversalAr::ConfigBoolean, 'config_booleans'
   
-  belongs_to :configuration
+  belongs_to :configuration, optional: true
   
   validates :subject, :key, :value, presence: true
   

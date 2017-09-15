@@ -5,7 +5,7 @@ class UniversalAr::ConfigDate < ApplicationRecord
   
   base UniversalAr::ConfigDate, 'config_dates'
   
-  belongs_to :configuration
+  belongs_to :configuration, optional: true
   
   validates :subject, :key, presence: true
   

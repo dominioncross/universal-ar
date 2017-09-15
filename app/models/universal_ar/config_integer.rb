@@ -5,7 +5,7 @@ class UniversalAr::ConfigInteger < ApplicationRecord
   
   base UniversalAr::ConfigInteger, 'config_integers'
   
-  belongs_to :configuration
+  belongs_to :configuration, optional: true
   
   validates :subject, :key, presence: true
   

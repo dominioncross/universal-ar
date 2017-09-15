@@ -5,7 +5,7 @@ class UniversalAr::ConfigString < ApplicationRecord
   
   base UniversalAr::ConfigString, 'config_strings'
   
-  belongs_to :configuration
+  belongs_to :configuration, optional: true
   
   validates :subject, :key, presence: true
   
