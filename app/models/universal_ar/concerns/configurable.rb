@@ -10,6 +10,7 @@ module UniversalAr::Concerns::Configurable
     has_many :config_booleans, class_name: 'UniversalAr::ConfigBoolean', as: :subject
     has_many :config_dates, class_name: 'UniversalAr::ConfigDate', as: :subject
 
+    #Update all config passed in via form parameters
     def update_configs!(config_params)
       config_params.each do |config|
         value = config[1].to_s
@@ -21,6 +22,7 @@ module UniversalAr::Concerns::Configurable
       end
     end
     
+    #find the corresponding model that is storing this config value
     def config_value_model(data_type)
       case data_type.to_s.titleize
       when 'String'
@@ -34,10 +36,20 @@ module UniversalAr::Concerns::Configurable
       end
     end
     
-    def config_value(key, data_type)
+    #find the value of config, based on the key and datatype
+    def config_value(key, data_type=nil)
       c = self.config_value_model(data_type).find_by(subject: self, key: key)
       return nil if c.nil?
       return c.value
+    end
+    
+    #Create or update config for this model, based on the parent that owns the configuration and the key/ that we are passing
+    def set_config_value!(config_parent, key, value)
+      #find the configuration
+      configuration = config_parent.configurations.find_by(class_name: self.class.to_s, key: key)
+      if !configuration.nil?
+        configuration.create_or_update_config(self, value)
+      end
     end
     
     #find the relevant config entry and make sure they have entered one
