@@ -1,10 +1,10 @@
 module UniversalAr
   class Config
 
-    cattr_accessor :default_setting
+    cattr_accessor :use_scope
 
     def self.reset
-      self.default_setting   = true
+      self.use_scope   = true
     end
 
   end
