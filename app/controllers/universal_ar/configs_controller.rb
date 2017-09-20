@@ -30,8 +30,7 @@ module UniversalAr
             end
           end
         elsif !params[:config_key].blank? and !params[:data_type].blank?
-          config = "UniversalAr::Config#{params[:data_type]}".classify.constantize.find_or_create_by(subject: subject, key: params[:config_key])
-          config.update(value: params[:value])
+          subject.set_adhoc_config_value!(params[:config_key], params[:value], params[:data_type])
         end
       end
       render json: {}

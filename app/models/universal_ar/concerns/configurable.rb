@@ -37,7 +37,7 @@ module UniversalAr::Concerns::Configurable
     end
     
     #find the value of config, based on the key and datatype
-    def config_value(key, data_type=nil)
+    def config_value(key, data_type='String')
       c = self.config_value_model(data_type).find_by(subject: self, key: key)
       return nil if c.nil?
       return c.value
@@ -50,6 +50,12 @@ module UniversalAr::Concerns::Configurable
       if !configuration.nil?
         configuration.create_or_update_config(self, value)
       end
+    end
+    
+    #Create or update config for this model, based on the parent that owns the configuration and the key/ that we are passing
+    def set_adhoc_config_value!(key, value, data_type='String')
+      config = "UniversalAr::Config#{data_type}".classify.constantize.find_or_create_by(subject: self, key: key)
+      config.update(value: value)
     end
     
     #find the relevant config entry and make sure they have entered one
