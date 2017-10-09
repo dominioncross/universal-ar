@@ -10,8 +10,15 @@ module UniversalAr
       if !@subject.nil?
         @configuration = @subject.configurations.create params.require(:configuration).permit(:class_name, :key, :description, :title, :data_type)
       end
-      puts @configuration.errors.to_json
-      render json: {configuration: @configuration.to_json}
+      respond_to do |format|
+        format.json{
+          render json: {configuration: @configuration.to_json}
+        }
+        format.js{
+          render layout: false
+        }
+      end
+      
     end
     
     private

@@ -33,7 +33,11 @@ module UniversalAr
           subject.set_adhoc_config_value!(params[:config_key], params[:value], params[:data_type])
         end
       end
-      render json: {}
+      respond_to do |format|
+        format.json{
+          render json: {}
+        }
+      end
     end
     
   end

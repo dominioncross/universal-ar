@@ -1,8 +1,12 @@
 module UniversalAr
   module ApplicationHelper
     
-    def submit(title='Save')
-      button_tag("#{icon('check')} #{title}".html_safe, class: 'btn btn-primary')
+    def submit(title='Save', icon='check')
+      button_tag("#{icon(icon)} #{title}".html_safe, class: 'btn btn-primary')
+    end
+    
+    def submit_confirm(title='Save', icon='check', confirm_message='Are you sure?')
+      button_tag("#{icon(icon)} #{title}".html_safe, class: 'btn btn-primary', data: {confirm: confirm_message, 'disable-with' => 'Loading...'})
     end
     
     def icon(i)
