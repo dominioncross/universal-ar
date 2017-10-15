@@ -60,9 +60,23 @@ module UniversalAr::Concerns::Configurable
     
     #find the relevant config entry and make sure they have entered one
     scope :with_config_value, ->(configuration){
-      joins("INNER JOIN `#{configuration.config_class.table_name}` ON `#{configuration.config_class.table_name}`.configuration_id = #{configuration.id} 
-        AND `#{configuration.config_class.table_name}`.`subject_id` = #{self.table_name}.`id` AND `#{configuration.config_class.table_name}`.`subject_type` = '#{self.class_name}'").
-      where("`#{configuration.config_class.table_name}`.`value` IS NOT NULL AND `#{configuration.config_class.table_name}`.`value` <> ''")
+      joins("INNER JOIN `#{configuration.config_class.table_name}` AS `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}` ON `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`key`='#{configuration.key}' 
+        AND `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`subject_id` = `#{self.table_name}`.`id` AND `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`subject_type` = '#{self.class_name}'").
+      where("`#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`value` IS NOT NULL AND `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`value` <> ''")
+    }
+    
+    #find the relevant config entry and make sure they have entered one
+    scope :matching_config_value, ->(configuration, value){
+      joins("INNER JOIN `#{configuration.config_class.table_name}` AS `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}` ON `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`key`='#{configuration.key}' 
+        AND `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`subject_id` = `#{self.table_name}`.`id` AND `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`subject_type` = '#{self.class_name}'").
+      where("`#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`value` = ?", value)
+    }
+    
+    #find the relevant config entry and make sure they have entered one
+    scope :like_config_value, ->(configuration, value){
+      joins("INNER JOIN `#{configuration.config_class.table_name}` AS `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}` ON `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`key`='#{configuration.key}' 
+        AND `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`subject_id` = `#{self.table_name}`.`id` AND `#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`subject_type` = '#{self.class_name}'").
+      where("`#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`value` LIKE ?", "%#{value}%")
     }
   
   end
