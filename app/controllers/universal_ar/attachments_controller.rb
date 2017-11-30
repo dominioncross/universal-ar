@@ -8,7 +8,17 @@ module UniversalAr
     
     def index
       if !@subject.nil?
-        render json: {attachments: @subject.attachments.map{|a| a.to_json}}
+        if !params[:redactor].blank?
+          render json: @subject.attachments.map{|a| {
+            title: a.title,
+            name: a.file_identifier,
+            url: a.file.url,
+            id: a.id,
+            size: "0Kb"
+          }}
+        else
+          render json: {attachments: @subject.attachments.map{|a| a.to_json}}
+        end
       else
         render json: {attachments: []}  
       end
@@ -17,13 +27,18 @@ module UniversalAr
     
     def create
       if !@subject.nil?
-        attachments = []
-        params[:files].each do |file|
-          att = @subject.attachments.create file: file, scope: @subject.scope, name: params[:name], user: current_user
-          puts att.errors.to_json
-          attachments.push(att)
+        if !params[:file].blank?
+          att = @subject.attachments.create file: params[:file], scope: @subject.scope, user: current_user
+          render json: { url: att.file.url, id: att.id.to_s }
+        elsif !params[:files].blank?
+          attachments = []
+          params[:files].each do |file|
+            att = @subject.attachments.create file: file, scope: @subject.scope, name: params[:name], user: current_user
+            puts att.errors.to_json
+            attachments.push(att)
+          end
+          render json: {attachments: @subject.attachments.map{|a| a.to_json}}
         end
-        render json: {attachments: @subject.attachments.map{|a| a.to_json}}
       end
     end
    

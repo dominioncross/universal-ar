@@ -8,7 +8,16 @@ module UniversalAr
     
     def index
       if !@subject.nil?
-        render json: {pictures: @subject.pictures.map{|a| a.to_json}}
+        if !params[:redactor].blank?
+          render json: @subject.pictures.map{|a| {
+            thumb: a.image.url(:small),
+            url: a.image.url,
+            title: a.title,
+            id: a.id
+          }}
+        else
+          render json: {pictures: @subject.pictures.map{|a| a.to_json}}
+        end
       else
         render json: {pictures: []}  
       end
@@ -17,13 +26,18 @@ module UniversalAr
     
     def create
       if !@subject.nil?
-        pictures = []
-        params[:files].each do |file|
-          att = @subject.pictures.create image: file, scope: @subject.scope, name: params[:name], user: current_user
-          puts att.errors.to_json
-          pictures.push(att)
+        if !params[:file].blank?
+          att = @subject.pictures.create image: params[:file], scope: @subject.scope, user: current_user
+          render json: { url: att.image.url, id: att.id.to_s }
+        elsif !params[:files].blank?
+          pictures = []
+          params[:files].each do |file|
+            att = @subject.pictures.create image: file, scope: @subject.scope, name: params[:name], user: current_user
+            puts att.errors.to_json
+            pictures.push(att)
+          end
+          render json: {pictures: @subject.pictures.map{|a| a.to_json}}
         end
-        render json: {pictures: @subject.pictures.map{|a| a.to_json}}
       end
     end
    
