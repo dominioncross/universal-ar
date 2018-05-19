@@ -12,3 +12,6 @@ gemspec
 
 # To use a debugger
 # gem 'byebug', group: [:development, :test]
+gem 'bootstrap-sass'
+gem 'devise'
+gem 'jquery-rails'

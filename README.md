@@ -22,6 +22,7 @@ $ gem install universal_ar
 ```
 ```bash
 $ rails g universal_ar:install
+$ rails g devise:install
 $ rails g devise:controllers users
 $ rails g devise:views users
 $ rails db:migrate

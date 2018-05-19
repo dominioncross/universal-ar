@@ -46,7 +46,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     add_index :users, :reset_password_token, unique: true
     add_index :users, :confirmation_token,   unique: true
     add_index :users, :unlock_token,         unique: true
-    
+
     ######## ROLES
     create_table(:roles) do |t|
       t.references :scope, polymorphic: true
@@ -61,7 +61,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     add_index(:roles, :name)
     add_index(:roles, [ :name, :scope_type, :scope_id ])
     add_index(:users_roles, [ :user_id, :role_id ])
-    
+
     #### FUNCTIONS
     create_table :functions do |t|
       t.references :scope, polymorphic: true
@@ -75,7 +75,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     add_index(:functions, :context)
     add_index(:functions, :code)
     add_index(:subject_functions, [ :subject_id, :subject_type, :function_id ], name: :index_subject_functions)
-    
+
     ### KEY VALUES
     create_table :key_values do |t|
       t.references  :subject, polymorphic: true
@@ -84,7 +84,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.timestamps
     end
     add_index(:key_values, [:subject_type, :subject_id, :key], name: :index_scope)
-    
+
     ### KEY VALUE HISTORY
     create_table :key_value_histories do |t|
       t.references  :subject, polymorphic: true
@@ -94,7 +94,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.timestamps
     end
     add_index(:key_value_histories, [:subject_type, :subject_id, :key], name: :index_scope)
-    
+
     ### COMMENTS
     create_table :comments do |t|
       t.references  :scope, polymorphic: true
@@ -104,7 +104,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.references  :user
       t.timestamps
     end
-    
+
     ### ATTACHMENTS
     create_table :attachments do |t|
       t.references  :scope, polymorphic: true
@@ -115,7 +115,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.references  :user
       t.timestamps
     end
-    
+
     ### PICTURES
     create_table :pictures do |t|
       t.references  :scope, polymorphic: true
@@ -125,7 +125,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.references  :user
       t.timestamps
     end
-    
+
     ### CONFGURATIONS
     create_table :configurations do |t|
       t.references  :subject, polymorphic: true
@@ -165,8 +165,24 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.string      :key
       t.boolean     :value, default: false
     end
-    
+    create_table :reference_numbers do |t|
+      t.references :scope, polymorphic: true
+      t.references :subject, polymorphic: true
+      t.integer :number
+    end
+    create_table :addresses do |t|
+      t.references :scope, polymorphic: true
+      t.references :subject, polymorphic: true
+      t.string     :line_1, limit: 60
+      t.string     :line_2, limit: 60
+      t.string     :city, limit: 30
+      t.string     :state, limit: 30
+      t.string     :country, limit: 3
+      t.string     :postal_code, limit: 10
+      t.timestamps
+    end
+
   end
-  
-  
+
+
 end

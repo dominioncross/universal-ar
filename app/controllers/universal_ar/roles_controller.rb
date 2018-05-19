@@ -18,7 +18,7 @@ module UniversalAr
       else
         redirect_to universal_ar.roles_path
       end
-      
+
     end
 
     def show
@@ -49,14 +49,17 @@ module UniversalAr
     end
 
     def update
+      @role.update(role_params)
       functions = params[:functions]
       @role.functions.destroy_all
-      params[:functions].each do |function|
-        context = function
-        codes = params[:functions][function]
-        codes.each do |code|
-          f = UniversalAr::Function.find_or_create_by(scope: universal_scope, context: context, code: code)
-          @role.functions << f
+      if params[:functions]
+        params[:functions].each do |function|
+          context = function
+          codes = params[:functions][function]
+          codes.each do |code|
+            f = UniversalAr::Function.find_or_create_by(scope: universal_scope, context: context, code: code)
+            @role.functions << f
+          end
         end
       end
       redirect_to universal_ar.roles_path
@@ -80,7 +83,7 @@ module UniversalAr
     def find_role
       @role = ::UniversalAr::Role.find(params[:id])
     end
-    
+
     def find_roles
       roles = ::UniversalAr::Role.all
       roles = roles.scoped_to(universal_scope) if !universal_scope.nil?
