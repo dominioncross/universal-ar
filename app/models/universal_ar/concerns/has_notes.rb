@@ -4,7 +4,7 @@ module UniversalAr::Concerns::HasNotes
   extend ActiveSupport::Concern
 
   included do
-    has_many :notes, as: :subject
+    has_many :notes, as: :subject, class_name: 'UniversalAr::Note'
 
     UniversalAr::Note::Kinds.each do |kind|
       define_method("#{kind}_note!") do |message, user = nil, scope = nil|

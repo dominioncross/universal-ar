@@ -1,22 +1,23 @@
 UniversalAr::Engine.routes.draw do
   root to: 'roles#index'
-  
+
   resource :setup, controller: :setup
-  
+
   resources :tags
+  resources :notes
   resources :comments
   resources :attachments
   resources :pictures
   resources :configs
   resources :statuses
   resources :configurations
-  
+
   resources :users do
     collection do
       get :autocomplete
     end
   end
-  
+
   resources :roles do
     member do
       get :users
