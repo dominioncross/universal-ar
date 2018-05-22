@@ -5,10 +5,11 @@ class UniversalAr::Scope < ApplicationRecord
   include UniversalAr::Concerns::Functional
   include UniversalAr::Concerns::Commentable
   include UniversalAr::Concerns::HasRoles
-  
+  include UniversalAr::Concerns::HasNotes
+
   has_many :users, class_name: 'UniversalAr::User'
-  
-  base 'UniversalAr::Scope', 'scopes'
+
+  base UniversalAr::Scope, 'scopes'
   array %w(domain)
-  
+
 end

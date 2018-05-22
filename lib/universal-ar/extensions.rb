@@ -6,7 +6,7 @@ class String
     #true if Float(self) rescue false
     !!(self =~ /^[-+]?[0-9]+$/)
   end
-  def self.random(length)
+  def self.random(length=8)
     rand(36**length).to_s(36)
   end
   def abbreviate
@@ -37,6 +37,12 @@ class Array
   def to_string
     self.map{|s| s.to_s}
   end
+  def counted_hash
+    h = Hash.new(0)
+    self.to_a.each{|v| h[v] +=1}
+    return h
+  end
+
 end
 class Symbol
   def titleize
