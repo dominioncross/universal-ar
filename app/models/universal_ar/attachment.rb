@@ -6,27 +6,28 @@ class UniversalAr::Attachment < ApplicationRecord
   include UniversalAr::Concerns::Polymorphic
   include UniversalAr::Concerns::Commentable
   include UniversalAr::Concerns::Taggable
-  
+  include UniversalAr::Concerns::Logged
+
   base UniversalAr::Attachment, 'attachments'
   kinds
   tags
-        
+
   mount_uploader :file, UniversalAr::FileUploader
-        
+
   validates_presence_of :file
   scope :for_name, ->(n){where(name: n)}
   scope :recent, ->(){order_by(created_at: :desc)}
-  
+
   belongs_to :user
-  
+
   def image?
     %w(.png .jpg .gif).any?{ |file_type| self.file_identifier.to_s.include?(file_type) }
   end
-  
+
   def title
     self.name.blank? ? self.file_identifier : self.name
   end
-        
+
   def to_json
     {
       id: self.id.to_s,

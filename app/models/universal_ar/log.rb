@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-class UniversalAr::ActionLog < ApplicationRecord
-  self.table_name = 'action_logs'
+class UniversalAr::Log < ApplicationRecord
+  self.table_name = 'logs'
   include UniversalAr::Concerns::Base
   include UniversalAr::Concerns::Scoped
   include UniversalAr::Concerns::Polymorphic
 
-  base UniversalAr::ActionLog, 'action_logs'
+  base UniversalAr::Log, 'logs'
 
   belongs_to :user
 
@@ -22,8 +22,8 @@ class UniversalAr::ActionLog < ApplicationRecord
     }
   end
 
-  def self.build(action_log_hash)
-    action_log = UniversalAr::ActionLog.new(action_log_hash)
-    action_log.save
+  def self.build(log_hash)
+    log = UniversalAr::Log.new(log_hash)
+    log.save
   end
 end

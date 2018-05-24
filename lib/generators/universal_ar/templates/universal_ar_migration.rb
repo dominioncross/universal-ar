@@ -1,6 +1,11 @@
 class UniversalArMigration < ActiveRecord::Migration[5.0]
   def change
+    create_table(:platforms) do |t|
+      t.string :name
+      t.timestamps
+    end
     create_table(:scopes) do |t|
+      t.references :platform, foreign_key: true
       t.string :name
       t.timestamps
     end
@@ -182,15 +187,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    create_table :notes do |t|
-      t.references :scope, polymorphic: true
-      t.references :subject, polymorphic: true
-      t.string :message, limit: 1000
-      t.references :user, foreign_key: true
-      t.timestamps
-    end
-
-    create_table :action_logs do |t|
+    create_table :logs do |t|
       t.references :scope, polymorphic: true
       t.references :subject, polymorphic: true
       t.string :code, limit: 50

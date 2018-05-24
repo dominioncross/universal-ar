@@ -15,7 +15,7 @@ module UniversalAr::Models
       include UniversalAr::Concerns::Scoped
       include UniversalAr::Concerns::Flaggable
       include UniversalAr::Concerns::Commentable
-      include UniversalAr::Concerns::HasNotes
+      include UniversalAr::Concerns::Logged
       include UniversalAr::Concerns::Taggable
 
       base 'User', 'users'

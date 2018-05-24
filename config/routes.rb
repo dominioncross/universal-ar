@@ -4,7 +4,6 @@ UniversalAr::Engine.routes.draw do
   resource :setup, controller: :setup
 
   resources :tags
-  resources :notes
   resources :comments
   resources :attachments
   resources :pictures
