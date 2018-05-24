@@ -190,6 +190,14 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
+    create_table :action_logs do |t|
+      t.references :scope, polymorphic: true
+      t.references :subject, polymorphic: true
+      t.string :code, limit: 50
+      t.references :user, foreign_key: true
+      t.timestamps
+    end
+
   end
 
 
