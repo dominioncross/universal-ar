@@ -12,6 +12,8 @@ class UniversalAr::Log < ApplicationRecord
 
   validates :code, :subject, presence: true
 
+  default_scope ->(){ order(created_at: :desc) }
+
   def json
     {
       id: id.to_s,
