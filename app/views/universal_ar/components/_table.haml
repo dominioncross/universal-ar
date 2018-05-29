@@ -8,10 +8,10 @@
 
   %tbody{id: body_id}
     = yield
-  
+
 - if !attrs[:sortable_url].blank?
   - if request.xhr?
-    = render '/universal/components/sortable_js', sortable_url: attrs[:sortable_url], table_body_id: body_id
+    = render '/universal_ar/components/sortable_js', sortable_url: attrs[:sortable_url], table_body_id: body_id
   - else
     - content_for :javascript do
-      = render '/universal/components/sortable_js', sortable_url: attrs[:sortable_url], table_body_id: body_id
+      = render '/universal_ar/components/sortable_js', sortable_url: attrs[:sortable_url], table_body_id: body_id

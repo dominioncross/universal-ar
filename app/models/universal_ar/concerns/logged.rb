@@ -6,8 +6,8 @@ module UniversalAr::Concerns::Logged
   included do
     has_many :logs, as: :subject, class_name: 'UniversalAr::Log'
 
-    def log!(code, user)
-      logs.create scope: scope, code: code, user: user
+    def log!(code, user, value=nil)
+      logs.create scope: scope, code: code, user: user, value: value
     end
   end
 
