@@ -185,10 +185,10 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.references :scope, polymorphic: true
       t.references :subject, polymorphic: true
       t.string     :kind, limit: 30
-      t.string     :line_1, limit: 60
-      t.string     :line_2, limit: 60
-      t.string     :city, limit: 30
-      t.string     :state, limit: 30
+      t.string     :line_1, limit: 150
+      t.string     :line_2, limit: 150
+      t.string     :city, limit: 60
+      t.string     :state, limit: 60
       t.string     :country, limit: 3
       t.string     :postal_code, limit: 10
       t.timestamps

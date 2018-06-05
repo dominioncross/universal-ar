@@ -13,10 +13,9 @@ module UniversalAr
           if existing_address
             existing_address.update(address_hash)
           else
-            existing_address = addresses.new address_hash.except(:kind)
+            existing_address = addresses.new address_hash.permit!
             existing_address.scope = scope
             existing_address.save
-            existing_address.kind = address_hash[:kind]
           end
           existing_address
         end
