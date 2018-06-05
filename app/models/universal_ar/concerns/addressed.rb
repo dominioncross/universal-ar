@@ -13,7 +13,7 @@ module UniversalAr
           if existing_address
             existing_address.update(address_hash)
           else
-            existing_address = addresses.new address_hash.permit!
+            existing_address = addresses.new address_hash
             existing_address.scope = scope
             existing_address.save
           end
