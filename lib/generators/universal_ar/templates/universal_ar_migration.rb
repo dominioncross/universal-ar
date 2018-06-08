@@ -7,6 +7,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     create_table(:scopes) do |t|
       t.references :platform, foreign_key: true
       t.string :name
+      t.string :guid, limit: 50
       t.timestamps
     end
     create_table :users do |t|

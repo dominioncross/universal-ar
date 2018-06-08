@@ -14,4 +14,7 @@ class UniversalAr::Scope < ApplicationRecord
 
   belongs_to :platform, optional: true
 
+  after_initialize do
+    self.guid = SecureRandom.uuid if new_record?
+  end
 end
