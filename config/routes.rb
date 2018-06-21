@@ -3,6 +3,7 @@ UniversalAr::Engine.routes.draw do
 
   resource :setup, controller: :setup
 
+  resources :logs
   resources :tags
   resources :comments
   resources :attachments
