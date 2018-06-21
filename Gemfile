@@ -14,4 +14,5 @@ gemspec
 # gem 'byebug', group: [:development, :test]
 gem 'bootstrap-sass'
 gem 'devise'
+gem 'draper'
 gem 'jquery-rails'

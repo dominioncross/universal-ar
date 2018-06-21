@@ -11,18 +11,20 @@ module UniversalAr
     private
 
     def logs_json
-      @subject.logs.map(&:json)
+      if @subject
+        logs = @subject.logs
+      elsif current_user
+        logs = current_user.created_logs
+      end
+      logs.decorate.map(&:json)
     end
 
     def find_subject
-      @subject = if (params[:subject_type].blank? ||
+      return if (params[:subject_type].blank? ||
                     params[:subject_type] == 'undefined') &&
                     (params[:subject_id].blank? ||
                     params[:subject_id] == 'undefined')
-                   current_user
-                 else
-                   params[:subject_type].classify.constantize.find(params[:subject_id])
-                 end
+      params[:subject_type].classify.constantize.find(params[:subject_id])
     end
   end
 end
