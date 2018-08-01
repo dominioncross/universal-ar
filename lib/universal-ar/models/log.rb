@@ -10,10 +10,11 @@ module UniversalAr::Models
 
       base UniversalAr::Log, 'logs'
 
-      belongs_to :user
+      belongs_to :user, optional: true
 
       validates :code, :subject, presence: true
 
+      scope :priority, ->(){ where(priority: true) }
       default_scope ->(){ order(created_at: :desc) }
 
       def self.build(log_hash)

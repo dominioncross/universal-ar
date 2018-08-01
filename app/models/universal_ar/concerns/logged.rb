@@ -9,6 +9,11 @@ module UniversalAr::Concerns::Logged
     def log!(code, user, value=nil)
       logs.create scope: scope, code: code, user: user, value: value
     end
+
+    def priority_log!(code, user)
+      logs.create scope: scope, code: code, user: user, priority: priority
+    end
+
   end
 
 end

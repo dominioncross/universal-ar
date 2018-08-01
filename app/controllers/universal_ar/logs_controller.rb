@@ -16,6 +16,7 @@ module UniversalAr
       elsif current_user
         logs = current_user.created_logs
       end
+      logs = logs.priority if params[:priority].to_s == 'true'
       logs.decorate.map(&:json)
     end
 

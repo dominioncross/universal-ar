@@ -200,6 +200,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.references :subject, polymorphic: true
       t.string :code, limit: 50
       t.string :value, limit: 50
+      t.boolean :priority, default: false
       t.references :user, foreign_key: true
       t.timestamps
     end
