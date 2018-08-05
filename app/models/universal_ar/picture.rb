@@ -6,27 +6,27 @@ class UniversalAr::Picture < ApplicationRecord
   include UniversalAr::Concerns::Polymorphic
   include UniversalAr::Concerns::Commentable
   include UniversalAr::Concerns::Taggable
-  
+
   base UniversalAr::Picture, 'pictures'
   kinds
   tags
-        
-  mount_uploader :image, UniversalAr::ImageUploader
-        
+
+  mount_uploader :image, UniversalAr::ImageUploader if defined?(CarrierWave)
+
   validates_presence_of :image
   scope :for_name, ->(n){where(name: n)}
   scope :recent, ->(){order_by(created_at: :desc)}
-  
+
   belongs_to :user
-  
+
   def image?
     %w(.png .jpg .gif).any?{ |image_type| self.image_identifier.to_s.include?(image_type) }
   end
-  
+
   def title
     self.name.blank? ? self.image_identifier : self.name
   end
-        
+
   def to_json
     {
       id: self.id.to_s,
