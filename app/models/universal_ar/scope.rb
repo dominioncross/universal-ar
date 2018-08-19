@@ -6,6 +6,7 @@ class UniversalAr::Scope < ApplicationRecord
   include UniversalAr::Concerns::Commentable
   include UniversalAr::Concerns::HasRoles
   include UniversalAr::Concerns::Logged
+  include UniversalAr::Concerns::Configurable
 
   has_many :users, class_name: 'UniversalAr::User'
 
