@@ -25,5 +25,5 @@
           = link_to attrs[:title].html_safe, "#pb#{panel_id}", data: {toggle: 'collapse'}
         - else
           = (attrs[:title].blank? ? '&nbsp;' : attrs[:title]).html_safe
-  .panel-body{id: "pb#{panel_id}", style: attrs[:body_style], class: attrs[:collapsed] ? "panel-collapse collapse" : nil}
+  .panel-body{id: "pb#{panel_id}", style: attrs[:body_style], class: attrs[:collapsed] ? "panel-collapse collapse" : attrs[:panel_body_class]}
     = yield
