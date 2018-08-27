@@ -17,6 +17,8 @@ module UniversalAr::Concerns
         const_set('Kinds', kind_array.map(&:to_s))
 
         before_create :set_default_kind
+        scope :for_kind, ->(kind) { where(kind: kind.to_s) }
+
         unless default_kind.blank?
           after_initialize :init_kind
           define_method 'init_kind' do
@@ -28,7 +30,6 @@ module UniversalAr::Concerns
           # pending?
           define_method("#{name}?") { read_attribute(:kind) == name.to_s }
           # scopes
-          scope :for_kind, ->(kind) { where(kind: kind.to_s) }
           scope name.to_sym, ->() { where(kind: name.to_s) }
           scope "not_#{name}".to_sym, ->() { where('kind <> ?', name.to_s) }
         end
