@@ -5,10 +5,10 @@ class UniversalAr::Comment < ApplicationRecord
   include UniversalAr::Concerns::Scoped
   include UniversalAr::Concerns::Kind
   include UniversalAr::Concerns::Polymorphic
-  
+
   base UniversalAr::Comment, 'comments'
   kinds
-  
-  belongs_to :user
-  
+
+  belongs_to :user, optional: true
+
 end

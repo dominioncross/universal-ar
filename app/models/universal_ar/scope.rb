@@ -6,6 +6,7 @@ class UniversalAr::Scope < ApplicationRecord
   include UniversalAr::Concerns::Commentable
   include UniversalAr::Concerns::HasRoles
   include UniversalAr::Concerns::Logged
+  include UniversalAr::Concerns::Configurable
 
   has_many :users, class_name: 'UniversalAr::User'
 
@@ -14,4 +15,7 @@ class UniversalAr::Scope < ApplicationRecord
 
   belongs_to :platform, optional: true
 
+  after_initialize do
+    self.guid = SecureRandom.uuid if new_record?
+  end
 end

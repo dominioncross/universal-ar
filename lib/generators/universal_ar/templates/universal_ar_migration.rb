@@ -7,6 +7,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     create_table(:scopes) do |t|
       t.references :platform, foreign_key: true
       t.string :name
+      t.string :guid, limit: 50
       t.timestamps
     end
     create_table :users do |t|
@@ -14,6 +15,8 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
+      t.string :kind, limit: 30
+      t.string :status, limit: 30
       t.string :given_names
       t.string :family_name
       t.string :preferred_name
@@ -104,6 +107,8 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     create_table :comments do |t|
       t.references  :scope, polymorphic: true
       t.references  :subject, polymorphic: true
+      t.string      :kind, limit: 30
+      t.string      :status, limit: 30
       t.string      :title
       t.string      :content, limit: 5000
       t.references  :user
@@ -114,6 +119,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     create_table :attachments do |t|
       t.references  :scope, polymorphic: true
       t.references  :subject, polymorphic: true
+      t.string      :kind, limit: 30
       t.string      :name
       t.string      :notes, limit: 1000
       t.string      :file
@@ -125,6 +131,7 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     create_table :pictures do |t|
       t.references  :scope, polymorphic: true
       t.references  :subject, polymorphic: true
+      t.string      :kind, limit: 30
       t.string      :name
       t.string      :image
       t.references  :user
@@ -178,10 +185,11 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
     create_table :addresses do |t|
       t.references :scope, polymorphic: true
       t.references :subject, polymorphic: true
-      t.string     :line_1, limit: 60
-      t.string     :line_2, limit: 60
-      t.string     :city, limit: 30
-      t.string     :state, limit: 30
+      t.string     :kind, limit: 30
+      t.string     :line_1, limit: 150
+      t.string     :line_2, limit: 150
+      t.string     :city, limit: 60
+      t.string     :state, limit: 60
       t.string     :country, limit: 3
       t.string     :postal_code, limit: 10
       t.timestamps
@@ -191,6 +199,8 @@ class UniversalArMigration < ActiveRecord::Migration[5.0]
       t.references :scope, polymorphic: true
       t.references :subject, polymorphic: true
       t.string :code, limit: 50
+      t.string :value, limit: 50
+      t.boolean :priority, default: false
       t.references :user, foreign_key: true
       t.timestamps
     end

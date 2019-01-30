@@ -12,7 +12,7 @@ class UniversalAr::Attachment < ApplicationRecord
   kinds
   tags
 
-  mount_uploader :file, UniversalAr::FileUploader
+  mount_uploader :file, UniversalAr::FileUploader if defined?(CarrierWave)
 
   validates_presence_of :file
   scope :for_name, ->(n){where(name: n)}

@@ -24,6 +24,8 @@ module UniversalAr::Models
       flags
       tags
 
+      has_many :created_logs, class_name: 'UniversalAr::Log', foreign_key: :user_id
+
       def name
         [self.given_names.titleize, self.family_name.titleize].compact.join(' ')
       end
