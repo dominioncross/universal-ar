@@ -17,6 +17,7 @@ module UniversalAr
         logs = current_user.created_logs
       end
       logs = logs.priority if params[:priority].to_s == 'true'
+      logs = logs.where('created_at > ?', 1.week.ago) if params[:recent].to_s == 'true'
       logs.decorate.map(&:json)
     end
 
