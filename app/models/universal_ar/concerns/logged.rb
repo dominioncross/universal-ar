@@ -14,6 +14,14 @@ module UniversalAr::Concerns::Logged
       logs.create scope: scope, code: code, user: user, priority: true
     end
 
+    def logged_at(code, user=nil)
+      l = logs.where(code: code)
+      l = l.where(user: user) if user
+      return unless l.any?
+
+      l.first.created_at
+    end
+
   end
 
 end
