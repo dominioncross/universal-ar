@@ -24,6 +24,13 @@ module UniversalAr
       render json: comments_json
     end
 
+    def destroy
+      @model = find_model
+      @comment = @model.comments.find(params[:id])
+      @comment&.destroy
+      render json: comments_json     
+    end
+
     private
     def find_model
       if params[:subject_type]
