@@ -9,11 +9,11 @@ module UniversalAr
         def role_names
           self.roles.map{|r| r.name}
         end
-        
+
         def role_function_names
           self.role_functions.uniq.map{|r| r.name}
         end
-        
+
         def can?(context, code=nil)
           if code.blank?
             return self.role_functions.map{|f| f.context}.include?(context.to_s)
@@ -21,9 +21,9 @@ module UniversalAr
             return self.role_functions.map{|f| f.name}.include?("#{context.to_s}.#{code.to_s}")
           end
         end
-        
+
       end
-      
+
     end
   end
 end

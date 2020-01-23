@@ -2,7 +2,7 @@ require_dependency "universal_ar/application_controller"
 
 module UniversalAr
   class CommentsController < UniversalAr::ApplicationController
-    
+
     skip_before_action :validate_scope
     before_action :find_model
 
@@ -10,7 +10,7 @@ module UniversalAr
       @model = find_model
       render json: comments_json
     end
-    
+
     def create
       @model = find_model
       @comment = @model.comments.new content: params[:content]
@@ -31,18 +31,19 @@ module UniversalAr
       end
       return nil
     end
-    
+
     def comments_json
-      @model.comments.map{|c| 
+      @model.comments.map{|c|
         {
           id: c.id.to_s,
           kind: c.kind.to_s,
           author: (c.user.nil? ? c.author : c.user.name),
           content: c.content,
-          created_at: c.created_at
+          created_at: c.created_at,
+          when_formatted: c.created_at.strftime('%b %d, %Y, %l:%M%P')
         }
       }
     end
-    
+
   end
 end
