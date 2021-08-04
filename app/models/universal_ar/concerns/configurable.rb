@@ -79,5 +79,12 @@ module UniversalAr::Concerns::Configurable
       where("`#{configuration.config_class.table_name}_#{configuration.key.gsub('-','_')}`.`value` LIKE ?", "%#{value}%")
     }
 
+    #find the relevant config entry and make sure they have entered one
+    scope :matching_adhoc_config_value, ->(key, value, data_type){
+      joins("INNER JOIN `config_#{data_type.to_s}s` ON `config_#{data_type.to_s}s`.`key`='#{key}'
+        AND `config_#{data_type.to_s}s`.`subject_id` = `#{self.table_name}`.`id` AND `config_#{data_type.to_s}s`.`subject_type` = '#{self.class_name}'").
+      where("`config_#{data_type.to_s}s`.`value` = ?", value)
+    }
+
   end
 end
