@@ -12,7 +12,6 @@ module UniversalAr::Models
       include UniversalAr::Concerns::Kind
       include UniversalAr::Concerns::Status
       include UniversalAr::Concerns::UserAccess
-      include UniversalAr::Concerns::Scoped
       include UniversalAr::Concerns::Flaggable
       include UniversalAr::Concerns::Commentable
       include UniversalAr::Concerns::Logged
@@ -25,6 +24,7 @@ module UniversalAr::Models
       tags
 
       has_many :created_logs, class_name: 'UniversalAr::Log', foreign_key: :user_id
+      has_and_belongs_to_many :scopes, class_name: '::UniversalAr::Scope'
 
       def name
         [self.given_names.titleize, self.family_name.titleize].compact.join(' ')
