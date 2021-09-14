@@ -8,7 +8,7 @@ class UniversalAr::Scope < ApplicationRecord
   include UniversalAr::Concerns::Logged
   include UniversalAr::Concerns::Configurable
 
-  has_many :users, class_name: 'UniversalAr::User'
+  has_and_belongs_to_many :users, class_name: 'User'
 
   base UniversalAr::Scope, 'scopes'
   array %w(domain)
