@@ -15,6 +15,7 @@ module UniversalAr::Models
       validates :code, :subject, presence: true
 
       scope :priority, ->(){ where(priority: true) }
+      scope :recent, ->() { where('created_at > ?', 1.week.ago) }
       default_scope ->(){ order(created_at: :desc) }
 
       def self.build(log_hash)

@@ -18,7 +18,7 @@ module UniversalAr
       end
       logs = logs.scoped_to(universal_scope)
       logs = logs.priority if params[:priority].to_s == 'true'
-      logs = logs.where('created_at > ?', 1.week.ago) if params[:recent].to_s == 'true'
+      logs = logs.recent if params[:recent].to_s == 'true'
       logs.decorate.map(&:json)
     end
 
