@@ -54,8 +54,8 @@ module UniversalAr
       @role.functions.destroy_all
       if params[:functions]
         params[:functions].each do |function|
-          context = function
-          codes = params[:functions][function]
+          context = function.to_a[0]
+          codes = function.to_a[1]
           codes.each do |code|
             f = UniversalAr::Function.find_or_create_by(scope: universal_scope, context: context, code: code)
             @role.functions << f
