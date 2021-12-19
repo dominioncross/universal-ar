@@ -30,7 +30,7 @@ module UniversalAr::Concerns
           define_method("#{name}!") { update(status: name.to_s) }
           # scopes
           scope name.to_sym, ->() { where(status: name.to_s) }
-          scope "not_#{name}".to_sym, ->() { where('status <> ?', name.to_s) }
+          scope "not_#{name}".to_sym, ->() { where("`#{table_name}`.`status` <> ?", name.to_s) }
         end
       end
     end
