@@ -17,6 +17,10 @@ module UniversalAr
         def remove_flag!(flag)
           self.key_values.where(key: :flag, value: flag.to_s).destroy_all
         end
+
+        def flagged_with?(flag)
+          self.flags.include?(flag.to_s.parameterize)
+        end
       end
 
       module ClassMethods
