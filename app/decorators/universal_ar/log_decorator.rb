@@ -5,12 +5,13 @@ module UniversalAr
     def json
       {
         id: id.to_s,
+        scope_id: scope_id,
         code: code,
         message: message,
         date: l(created_at, format: :long),
         time_ago: [h.time_ago_in_words(created_at), 'ago'].join(' '),
         user_id: user_id.to_s,
-        user_name: user.nil? ? nil : user.name,
+        user_name: user&.name,
         priority: priority,
         path: path
       }
