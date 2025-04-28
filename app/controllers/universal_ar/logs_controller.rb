@@ -16,6 +16,8 @@ module UniversalAr
       elsif current_user
         logs = current_user.created_logs
       end
+      return [] unless logs&.any?
+
       logs = logs.scoped_to(universal_scope)
       logs = logs.priority if params[:priority].to_s == 'true'
       logs = logs.recent if params[:recent].to_s == 'true'
