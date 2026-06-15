@@ -1,5 +1,5 @@
-if defined?(CarrierWave)
-  module UniversalAr
+module UniversalAr
+  if defined?(CarrierWave)
     class ImageUploader < CarrierWave::Uploader::Base
 
       include CarrierWave::RMagick
@@ -36,6 +36,9 @@ if defined?(CarrierWave)
         process :resize_to_fit => [600,600]
       end
 
+    end
+  else
+    class ImageUploader
     end
   end
 end

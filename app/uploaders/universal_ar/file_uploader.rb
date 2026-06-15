@@ -1,5 +1,5 @@
-if defined?(CarrierWave)
-  module UniversalAr
+module UniversalAr
+  if defined?(CarrierWave)
     class FileUploader < CarrierWave::Uploader::Base
 
       storage :fog
@@ -17,6 +17,9 @@ if defined?(CarrierWave)
         return path.join('/')
       end
 
+    end
+  else
+    class FileUploader
     end
   end
 end
