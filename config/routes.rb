@@ -21,7 +21,8 @@ UniversalAr::Engine.routes.draw do
   resources :roles do
     member do
       get :users
-      post :add_user, :invite_user
+      post :add_user
+      post :invite_user
       delete :remove_user
     end
   end
